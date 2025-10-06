@@ -1,14 +1,13 @@
 package main
 
 import (
+	"backend_main/utils"
 	"bufio"
 	"encoding/json"
 	"fmt"
 	"log"
 	"os"
 	"strings"
-
-	utils "backend_utils"
 )
 
 func loadTitles() map[int]string {

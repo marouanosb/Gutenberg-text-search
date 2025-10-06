@@ -1,4 +1,4 @@
-package backend_utils
+package utils
 
 // Minimize returns a new DFA that is equivalent but with the minimal number of states.
 func (d *DFA) Minimize() *DFA {
