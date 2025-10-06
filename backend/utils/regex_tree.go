@@ -1,4 +1,4 @@
-package backend_utils
+package utils
 
 // regex tree node structure
 type RegexTreeNode struct {
