@@ -1,4 +1,4 @@
-package backend_utils
+package utils
 
 func AddParentheses(pattern string) string {
 	result := pattern

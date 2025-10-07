@@ -1,4 +1,4 @@
-package backend_utils
+package utils
 
 import (
 	"bufio"
@@ -25,9 +25,10 @@ func matchInText(dfaStart *DFAState, text string) bool {
 }
 
 func MatchAllText(DFAStart *DFAState, scanner *bufio.Scanner) (matched bool, number_matches int, matches map[int]string) {
-	line_number := 0
 	number_matches = 0
 	matches = map[int]string{}
+	line_number := 0
+
 	for scanner.Scan() {
 		line_number++
 		line := scanner.Text()
