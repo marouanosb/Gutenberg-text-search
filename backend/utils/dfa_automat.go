@@ -6,12 +6,11 @@ import (
 	"sort"
 )
 
-// DFAState represents one DFA state, which is really a set of NFA states.
 type DFAState struct {
 	id     int
-	nfaSet map[*State]struct{} // The NFA states this DFA state represents
-	trans  map[rune]*DFAState  // Deterministic transitions
-	final  bool                // Accepting if any NFA state is accepting
+	nfaSet map[*State]struct{} // NDFA states represented by this DFA
+	trans  map[rune]*DFAState
+	final  bool
 }
 
 // DFA is the deterministic automaton.

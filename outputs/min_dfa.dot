@@ -3,15 +3,13 @@ digraph DFA {
   node [shape=circle];
   0 [shape=doublecircle];
   1 [shape=circle];
-  1 -> 2 [label="g"];
+  1 -> 2 [label="r"];
   2 [shape=circle];
-  2 -> 6 [label="o"];
+  2 -> 5 [label="t"];
   3 [shape=circle];
-  3 -> 4 [label="S"];
+  3 -> 4 [label="p"];
   4 [shape=circle];
-  4 -> 5 [label="a"];
+  4 -> 1 [label="a"];
   5 [shape=circle];
-  5 -> 1 [label="r"];
-  6 [shape=circle];
-  6 -> 0 [label="n"];
+  5 -> 0 [label="i"];
 }

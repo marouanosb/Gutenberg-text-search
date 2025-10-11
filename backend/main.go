@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"strings"
+	"time"
 )
 
 func loadTitles() map[int]string {
@@ -34,6 +35,7 @@ type application struct {
 func main() {
 	// Load args
 	var app application
+
 	if len(os.Args) == 4 { // algo mentioned
 		app = application{
 			pattern: os.Args[1],
@@ -111,6 +113,10 @@ func main() {
 
 		// DFA
 		dfa := utils.NFAToDFA(nfa)
+		err = dfa.ToDOT("../outputs/dfa.dot")
+		if err != nil {
+			panic(err)
+		}
 		dfa_min := dfa.Minimize() // minimisation
 		err = dfa_min.ToDOT("../outputs/min_dfa.dot")
 		if err != nil {
@@ -119,7 +125,9 @@ func main() {
 
 		// Matching
 		scanner := bufio.NewScanner(file)
+		time_before := time.Now()
 		matched, number_matches, matches := utils.MatchAllText(dfa_min.Start, scanner)
+		time_after := time.Now()
 		if matched {
 			println("Matches found :", number_matches)
 			matches_showed := 0
@@ -129,20 +137,23 @@ func main() {
 				println("#", line, ":", strings.TrimSpace(match))
 				// Show max 10 matches
 				if matches_showed >= 10 {
-					fmt.Printf("... %v more matches", number_matches-matches_showed)
+					fmt.Printf("... %v more matches\n", number_matches-matches_showed)
 					break
 				}
 			}
 		} else {
 			println("No matches found.")
 		}
+		println("> Time taken for < RegEx > matching :", time_after.Sub(time_before).Milliseconds(), "ms")
 	} else if app.algo == "kmp" {
 		// KMP
-		co := utils.CreateCarryOnTable(app.pattern)
+		co := utils.CreateCarryOverTable(app.pattern)
 
 		// Matching
 		scanner := bufio.NewScanner(file)
+		time_before := time.Now()
 		matched, number_matches, matches := utils.KMPSearch(app.pattern, scanner, co)
+		time_after := time.Now()
 		if matched {
 			println("Matches found :", number_matches)
 			matches_showed := 0
@@ -152,13 +163,15 @@ func main() {
 				println("#", line, ":", strings.TrimSpace(match))
 				// Show max 10 matches
 				if matches_showed >= 10 {
-					fmt.Printf("... %v more matches", number_matches-matches_showed)
+					fmt.Printf("... %v more matches\n", number_matches-matches_showed)
 					break
 				}
 			}
 		} else {
 			println("No matches found.")
 		}
+		println("> Time taken for < KMP > matching :", time_after.Sub(time_before).Milliseconds(), "ms")
+
 	}
 
 	// Serve

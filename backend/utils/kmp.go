@@ -2,7 +2,7 @@ package utils
 
 import "bufio"
 
-func CreateCarryOnTable(f string) []int {
+func CreateCarryOverTable(f string) []int {
 	n := len(f)
 	co := make([]int, n+1)
 
@@ -52,7 +52,6 @@ func detectLongestPrefixSuffix(pattern string) int {
 }
 
 func kmpSearchSingleLine(pattern string, text string, co []int) bool {
-
 	runePattern := []rune(pattern)
 	runeText := []rune(text)
 
@@ -75,7 +74,6 @@ func kmpSearchSingleLine(pattern string, text string, co []int) bool {
 			}
 		}
 	}
-
 	return false
 }
 
