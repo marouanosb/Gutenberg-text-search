@@ -54,7 +54,6 @@ python manage.py computeKeywords
 python manage.py addKeywords
 python manage.py createGraphJaccard
 python manage.py tfidf
-python manage.py cosin keyword [args**]
 python manage.py final_threshold
 python manage.py graphVisualisation
 ```
@@ -202,21 +201,6 @@ We can visually see on the left all the nodes, and on the right the first 1000  
 
 ##### 2.2.1.5. `tfidf`
 - creates the TF-IDF for each keyword 
-##### 2.2.1.5. `cosin`
-- This script serves as a local test for improving book search speed using cosine similarity
-1. **Command-Line Arguments**:
-   - `keyword` (str): The keyword to search for (e.g., "sargon").
-   - `--language` (str): Language selection (`english`, `french`, or `both`).
-   - `--top` (int): Number of top similar books to return (default: 10).
-   - `--min-score` (float): Minimum similarity threshold (default: 0.4)
-2. **Search Process**:
-   - Finds matching keywords in `KeywordsEnglish` and `KeywordsFrench` models.
-   - Retrieves books linked to these keywords from `Book` via `KeywordBookEnglish` or `KeywordBookFrench`.
-   - Groups books by keyword and displays search results.
-3. **Output & Performance**:
-   - Displays found keywords and the number of books associated with each.
-   - Shows up to 5 books per keyword, with an indicator if more exist.
-   - Measures and prints execution time for performance comparison.
 
 ##### 2.2.1.7 `Number of tokens, Index Table size `
  - English 
@@ -319,22 +303,6 @@ Therefore, **the maximum possible number of edges in this graph is 603,351**.
         -   applies the centrality method.
         -   Returns detailed book information for all neighbors.
         
-    -   `data/books/keywords/cosine-similarity/` : returns neighbhors using cosine similarity for keywords.
-        - Initial Filtering & Keyword extraction
-        - ***Vector Representation*** :
-            - Keywords become dimensions of the vector
-            - TF-IDF (Term Frequency-Inverse Document Frequency) scores are used as vector coordinates
-            - This converts textual information into a numerical representation that can be mathematically compared
-
-        - ***Cosine Similarity Calculation***
-            - Measures the cosine of the angle between two book vectors
-            - Similarity score ranges from 0 (completely different) to 1 (identical)
-            - Calculated using the formula `similarity = (dot product of vectors) / (magnitude of vector 1 * magnitude of vector 2)`
-        - *** Similarity Filtering and Ranking***
-            - Identifies books with similarity scores above a threshold (default 0.3)
-            - Ranks books by their similarity score
-            - Optionally limits the number of results
-            - Provides option to sort by additional criteria like download count
 #### 2.2.6. `sort.py`: Sorting and Suggestion Logic
 
 -   **Purpose:** Implements sorting based on graph centrality and generates book suggestions.
@@ -396,18 +364,15 @@ Therefore, **the maximum possible number of edges in this graph is 603,351**.
 
 
 ## 2.3. Results :
-- Here we tried comparing The betweeness & closness & cosin. Our method is simple, Cosin takes in precalculated tf-idf for each token, and returns the books candidates. For the centrality, upon the request, we get the neighbhors that are precalculated and are in the data base, and we get the nodes to process, we may note that the graph can either be weighted  or UnweightedGraph, the closeness centrality, the graph needs to be weighted, but the betweenesss is an UnweightedGraph. We also sort by the number of download. the query is tested on the same token that is `sargon` for closeness and for for the between the title "The c" was selected
+- Here we tried comparing The betweeness & closness. Our method is simple, For the centrality, upon the request, we get the neighbhors that are precalculated and are in the data base, and we get the nodes to process, we may note that the graph can either be weighted  or UnweightedGraph, the closeness centrality, the graph needs to be weighted, but the betweenesss is an UnweightedGraph. We also sort by the number of download. the query is tested on the same token that is `sargon` for closeness and for for the between the title "The c" was selected
    -  ***Results of calculation time***
-        - 1. ***Cosin*** : 0.00155 ~0.0017 seconds 
         - 2. ***Closeness*** : 0.005
         - 3. ***Betweeness*** : 0.0067
         - 4. ***Download count*** : 0.01 seconds 
 
-    which makes the cosin the fastest of them.
 ## 2.4. Compraison on api requests: 
 The point is to get the books that the world `hello` appears, the aim is trying to calculate the request time of each method. The calculation time starts from the moment the request is receive until the reponse is sent.
   -  ***Results of api requests***:
-        - 1. ***Cosin*** : 0.04 seconds
         - 2. ***Closeness*** : 1.32 seconds
         - 3. ***Betweeness*** : 1.44 seconds
         - 4. ***Download count*** : 2 seconds 

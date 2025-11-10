@@ -14,7 +14,6 @@ import { Home } from "lucide-react";
 // import Image from "next/image";
 
 const urlBaseRequete = "http://localhost:8000/server/books/?";
-const cosineUrlBase = "http://localhost:8000/data/books/keywords/cosine-similarity/?";
 
 // Simple Search Form Component
 function SimpleSearchForm({ onSearch,loadingState }: { onSearch: (data: any) => void ,loadingState: (loading: boolean) => void}) {
@@ -266,75 +265,6 @@ function AdvancedSearchForm({ onSearch,setLoading }: { onSearch: (data: any) => 
   );
 }
 
-// New TF-IDF Cosine Similarity Search Form Component
-function TFIDFCosineSearchForm({ onSearch, setLoading }: { onSearch: (data: any) => void, setLoading: (loading: boolean) => void}) {
-  const [keyword, setKeyword] = useState("");
-  const [selectedKeywordType, setSelectedKeywordType] = useState("classique");
-
-  const handleSubmit = () => {
-    if (!keyword) return;
-
-    const url = `${cosineUrlBase}keyword=${keyword}${selectedKeywordType === "regex" ? "&keyword_type=regex" : ""}`;
-
-    const fetchBooks = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(url, { mode: "cors" });
-        const result = await response.json();
-        // Format the result to match the expected structure and add search params
-        onSearch({ result: result, suggestions: [], searchParams: {keyword} });
-      } catch (error) {
-        console.error("Error fetching books with cosine similarity:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBooks();
-  };
-
-  return (
-    <div className="p-6 rounded-lg shadow-md w-full max-w-lg">
-      <h2 className="text-xl font-bold mb-4">TF-IDF Cosine Search</h2>
-      
-      <div className="mb-4 flex items-center gap-2">
-        <div className="flex-1">
-          <label className="block text-sm mb-1">Keyword</label>
-          <Input 
-            placeholder="Enter a keyword for cosine similarity search" 
-            value={keyword} 
-            onChange={(e) => setKeyword(e.target.value)} 
-          />
-        </div>
-        <div>
-          <label className="block text-sm mb-1">Type</label>
-          <Select value={selectedKeywordType} onValueChange={setSelectedKeywordType}>
-            <SelectTrigger className="w-32">
-              <SelectValue placeholder="Type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="classique">Classique</SelectItem>
-              <SelectItem value="regex">Regex</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-      
-      <Button 
-        onClick={handleSubmit} 
-        className="w-full"
-        disabled={!keyword}
-      >
-        Search
-      </Button>
-      
-      <p className="mt-3 text-sm text-gray-500">
-        This search finds books with content similar to your keyword using TF-IDF and cosine similarity.
-      </p>
-    </div>
-  );
-}
-
 // Book Component with correct image handling
 function Book({ book }: { book: any }) {
   return (
@@ -469,7 +399,6 @@ export default function HomePgae() {
             <TabsList>
               <TabsTrigger value="simple">Simple Search</TabsTrigger>
               <TabsTrigger value="advanced">Advanced Search</TabsTrigger>
-              <TabsTrigger value="tfidf">TF-IDF Cosine</TabsTrigger>
             </TabsList>
           </div>
           
@@ -479,10 +408,6 @@ export default function HomePgae() {
           
           <TabsContent value="advanced" className="flex justify-center">
             <AdvancedSearchForm onSearch={handleSetBookData} setLoading={setLoading}/>
-          </TabsContent>
-          
-          <TabsContent value="tfidf" className="flex justify-center">
-            <TFIDFCosineSearchForm onSearch={handleSetBookData} setLoading={setLoading}/>
           </TabsContent>
         </Tabs>
          

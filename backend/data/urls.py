@@ -9,5 +9,4 @@ def construct_url_data(url):
 
 urlpatterns = [
     path('server/books/', views.BooksList.as_view()),
-    path('data/books/keywords/cosine-similarity/', views.CosinusViewSet.as_view())
 ]

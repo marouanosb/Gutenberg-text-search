@@ -110,7 +110,7 @@ export default function HomePage() {
                     <FeatureCard 
                       icon={<Search className="w-8 h-8 text-primary" />}
                       title="Multiple Search Options"
-                      description="Simple, advanced, and TF-IDF cosine similarity search capabilities"
+                      description="Simple and advanced search"
                       delay={0.8}
                     />
                     <FeatureCard 
