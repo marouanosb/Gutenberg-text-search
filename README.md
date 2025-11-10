@@ -1,6 +1,6 @@
 # Moteur de recherche de livre GUTENBERG
-- Salim Tabellout
-- Yanis Tabellout
+- Anis HALFAOUI
+- Merouane BOUAFIA
 # 1. Installation
 
 ### 1.1. Windows
