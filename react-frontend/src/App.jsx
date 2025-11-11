@@ -31,7 +31,7 @@ export default function App() {
       <BackgroundBook pages={14} />
       <header className="hero">
         <h1>Gutenberg Search</h1>
-        <p className="subtitle">A modern React frontend — search books by keyword, title or author</p>
+        <p className="subtitle">A modern search engine for books by keyword, title or author</p>
       </header>
 
       <main className="container">
@@ -52,7 +52,7 @@ export default function App() {
       </main>
 
       <footer className="footer">
-        <small>React frontend — connects to backend at <code>http://localhost:8000</code></small>
+        <small>frontend — connects to backend at <code>http://localhost:8000</code></small>
       </footer>
     </div>
   );
