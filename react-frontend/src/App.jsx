@@ -3,6 +3,7 @@ import SearchForm from "./components/SearchForm";
 import AdvancedSearchForm from "./components/AdvancedSearchForm";
 import Results from "./components/Results";
 import Loader from "./components/Loader";
+import BackgroundBook from "./components/BackgroundBook";
 
 const URL_BASE = "http://localhost:8000/server/books/?";
 
@@ -27,6 +28,7 @@ export default function App() {
 
   return (
     <div className="app-root">
+      <BackgroundBook pages={14} />
       <header className="hero">
         <h1>Gutenberg Search</h1>
         <p className="subtitle">A modern React frontend — search books by keyword, title or author</p>
