@@ -25,7 +25,14 @@ SECRET_KEY = 'django-insecure-p^c5vxqhkn2tw%wf$*wldmzib6c0^rw2vr5hfj=u6)7r7h*aa6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["217.182.170.152", "127.0.0.1","localhost"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "backend",        # pour que Nginx dans le réseau Docker puisse joindre Django
+    "0.0.0.0",        # si nécessaire
+    "217.182.170.152" # ton VPS IP
+]
+
 
 
 # Application definition
