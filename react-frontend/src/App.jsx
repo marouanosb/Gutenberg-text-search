@@ -6,7 +6,7 @@ import Loader from "./components/Loader";
 import BackgroundBook from "./components/BackgroundBook";
 
 // Prefer env-based base URL; default to relative path for production behind Nginx
-const URL_BASE = (import.meta?.env?.VITE_API_BASE || "/server/books/?");
+const URL_BASE = "http://backend:8000/server/books/?";
 
 export default function App() {
   const [tab, setTab] = useState("simple");
