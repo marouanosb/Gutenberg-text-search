@@ -5,8 +5,8 @@ import Results from "./components/Results";
 import Loader from "./components/Loader";
 import BackgroundBook from "./components/BackgroundBook";
 
-// Prefer env-based base URL; default to relative path for production behind Nginx
-const URL_BASE = "http://backend:8000/server/books/?";
+// Prefer env-based base URL; default to relative path via Nginx proxy
+const URL_BASE = ("/server/books/?");
 
 export default function App() {
   const [tab, setTab] = useState("simple");
