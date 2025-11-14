@@ -5,7 +5,8 @@ import Results from "./components/Results";
 import Loader from "./components/Loader";
 import BackgroundBook from "./components/BackgroundBook";
 
-const URL_BASE = "http://localhost:8000/server/books/?";
+// Prefer env-based base URL; default to relative path for production behind Nginx
+const URL_BASE = (import.meta?.env?.VITE_API_BASE || "/server/books/?");
 
 export default function App() {
   const [tab, setTab] = useState("simple");
@@ -52,7 +53,7 @@ export default function App() {
       </main>
 
       <footer className="footer">
-        <small>frontend — connects to backend at <code>http://localhost:8000</code></small>
+        <small>frontend — connects to backend via <code>{URL_BASE}</code></small>
       </footer>
     </div>
   );

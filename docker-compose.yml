@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: gutenberg-backend
+    working_dir: /app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/db.sqlite3:/app/db.sqlite3
+      - ./books:/app/books:ro
+    environment:
+      - DJANGO_SETTINGS_MODULE=backend.settings
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: react-frontend/Dockerfile
+    container_name: gutenberg-frontend
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    restart: unless-stopped
+
+networks:
+  default:
+    name: gutenberg-net
