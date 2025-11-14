@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Gutenberg-text-search auto-deploy periodically
+
+[Timer]
+OnBootSec=30s
+OnUnitActiveSec=60s
+Unit=gts-deploy.service
+
+[Install]
+WantedBy=timers.target

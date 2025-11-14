@@ -106,3 +106,33 @@ sudo docker compose exec backend python manage.py migrate
 - 502/404 from `/server/`: check `frontend` logs and that `backend` is healthy and reachable as `http://backend:8000/` inside the network.
 - CORS errors: when using the Nginx proxy path (`/server/`), CORS should not be needed. If calling the backend directly from a different origin, add that origin to `CORS_ALLOWED_ORIGINS` in Django settings.
 - `ALLOWED_HOSTS` errors: add your domain/IP to Django `ALLOWED_HOSTS`.
+
+## 9) Auto-deploy (pull from VPS)
+If you prefer not to store any secrets in GitHub, use the included systemd service + timer that periodically pulls from GitHub on the VPS and restarts the stack.
+
+Files added:
+- `scripts/auto-deploy.sh` – clones/pulls the repo, then `docker compose build --pull && docker compose up -d`.
+- `systemd/gts-deploy.service` – runs the script once.
+- `systemd/gts-deploy.timer` – triggers the service every minute.
+- `systemd/gts-deploy.env.example` – example env file to set `REPO_DIR` and `REPO_URL`.
+
+Setup on VPS (Ubuntu):
+```bash
+sudo cp systemd/gts-deploy.service /etc/systemd/system/
+sudo cp systemd/gts-deploy.timer /etc/systemd/system/
+sudo cp systemd/gts-deploy.env.example /etc/default/gts-deploy
+
+# Edit repo path if needed
+sudo nano /etc/default/gts-deploy   # set REPO_DIR to your path, e.g. /home/ubuntu/Gutenberg-text-search
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now gts-deploy.timer
+
+# Run once immediately (optional)
+sudo systemctl start gts-deploy.service
+
+# Watch logs
+journalctl -u gts-deploy.service -f
+```
+
+This method requires no credentials stored in GitHub. It pulls from a public repo URL on a schedule and redeploys automatically.
