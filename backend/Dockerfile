@@ -22,4 +22,5 @@ COPY backend /app
 EXPOSE 8000
 
 # Simple entrypoint: run migrations then gunicorn
-CMD ["bash", "-lc", "python manage.py migrate --noinput && gunicorn backend.wsgi:application --bind 0.0.0.0:8000 --workers 3"]
+CMD bash -c "python manage.py migrate --noinput && gunicorn backend.wsgi:application --bind 0.0.0.0:8000 --workers 3"
+
