@@ -16,6 +16,9 @@ fi
 
 cd "${REPO_DIR}"
 echo "[auto-deploy] Fetching latest..."
+# When run as root via systemd, Git may flag the repo as 'dubious ownership'.
+# Mark the directory as safe to avoid failure.
+git config --global --add safe.directory "${REPO_DIR}" || true
 git fetch --all --prune
 git reset --hard origin/main
 
