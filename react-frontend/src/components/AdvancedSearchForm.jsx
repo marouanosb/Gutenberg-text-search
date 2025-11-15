@@ -12,7 +12,7 @@ export default function AdvancedSearchForm({ urlBase, onSearch, setLoading }) {
   const [order, setOrder] = useState("ascending");
 
   const buildUrl = () => {
-    let url = `${urlBase}sort=${sort}&ord=${order}`;
+    let url = `${urlBase}sort=${sort}&order=${order}`;
     if (language !== "all") url += `&languages=${language}`;
     if (author) url += `&author_name=${encodeURIComponent(author)}&author_name_type=${authorType}`;
     if (title) url += `&title=${encodeURIComponent(title)}&title_name_type=${titleType}`;

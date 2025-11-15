@@ -9,7 +9,7 @@ export default function SearchForm({ urlBase, onSearch, setLoading }) {
   const [order, setOrder] = useState("ascending");
 
   const buildUrl = () => {
-    let url = `${urlBase}sort=${sort}&ord=${order}`;
+    let url = `${urlBase}sort=${sort}&order=${order}`;
     if (language !== "all") url += `&languages=${language}`;
     if (author) url += `&author_name=${encodeURIComponent(author)}`;
     if (title) url += `&title=${encodeURIComponent(title)}`;

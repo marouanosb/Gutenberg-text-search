@@ -6,6 +6,9 @@ import Loader from "./components/Loader";
 import BackgroundBook from "./components/BackgroundBook";
 
 // Prefer env-based base URL; default to relative path via Nginx proxy
+//if on localhost
+// const URL_BASE = "http://localhost:8000/server/books/?";
+//else on vps
 const URL_BASE = ("/server/books/?");
 
 export default function App() {
