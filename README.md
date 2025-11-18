@@ -2,7 +2,7 @@
 - Anis HALFAOUI
 - Merouane BOUAFIA
 
-- http://217.182.170.152:8080/
+- [Lien de la démo](http://217.182.170.152:8080/)
   
 # 1. Installation
 
